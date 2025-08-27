@@ -1,53 +1,137 @@
-/* Identidade Visual */
+/* Identidade Visual Moderna */
 :root {
-    --primary: #2563EB;
+    --primary: #4F46E5;
+    --primary-light: #6366F1;
     --secondary: #10B981;
     --accent: #F97316;
-    --background: #F1F5F9;
-    --text: #0B1220;
-    --font-main: 'Roboto', 'Inter', sans-serif;
+    --background: #F8FAFC;
+    --text: #1E293B;
+    --text-light: #64748B;
+    --success: #22C55E;
+    --error: #EF4444;
+    --warning: #F59E0B;
+    --card-bg: #FFFFFF;
+    --border: #E2E8F0;
+    --font-main: 'Roboto', 'Inter', system-ui, sans-serif;
 }
+
+/* Reset e Estilos Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background: var(--background);
     color: var(--text);
     font-family: var(--font-main);
-    margin: 0;
+    line-height: 1.5;
     min-height: 100vh;
 }
+
+/* Header Moderno */
 .header {
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
     color: #fff;
-    padding: 1rem 2rem;
+    padding: 1.25rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .header h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 700;
+    letter-spacing: -0.025em;
 }
+
 .header input[type="search"] {
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    border: none;
-    font-size: 1rem;
-    outline: 2px solid var(--accent);
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    width: 300px;
+    transition: all 0.3s ease;
+}
+
+.header input[type="search"]::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+.header input[type="search"]:focus {
+    outline: none;
+    background: white;
+    color: var(--text);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 .main-layout {
     display: flex;
     gap: 2rem;
     padding: 2rem;
+    max-width: 1440px;
+    margin: 0 auto;
 }
+
+/* Sidebar Moderna */
 .sidebar {
-    width: 300px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    width: 320px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.05);
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+}
+
+/* Botões Modernos */
+button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+#novoAlunoBtn {
+    background: var(--primary);
+    color: white;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+#novoAlunoBtn:hover {
+    background: var(--primary-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+
+#novaMatriculaBtn {
+    background: var(--secondary);
+    color: white;
+    width: 100%;
+    margin-top: 0.75rem;
+}
+
+#novaMatriculaBtn:hover {
+    background: #0EA5E9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
 }
 .sidebar h2 {
     color: var(--primary);

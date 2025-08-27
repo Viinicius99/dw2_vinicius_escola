@@ -3,99 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão Escolar</title>
+    <title>Sistema de Gestão Escolar</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Inter:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 </head>
 <body>
     <header class="header">
-        <h1>Gestão Escolar</h1>
-        <input type="search" id="searchAluno" placeholder="Buscar aluno..." aria-label="Buscar aluno">
+        <div class="header-content">
+            <h1>
+                <i class="bi bi-book"></i>
+                Sistema de Gestão Escolar
+            </h1>
+            <div class="search-container">
+                <i class="bi bi-search"></i>
+                <input 
+                    type="search" 
+                    id="searchAluno" 
+                    placeholder="Buscar aluno por nome ou email..." 
+                    aria-label="Buscar aluno"
+                >
+            </div>
+        </div>
     </header>
+
     <main class="main-layout">
         <aside class="sidebar">
-            <section class="filtros">
-                <h2>Filtros</h2>
-                <label for="turmaFiltro">Turma:</label>
-                <select id="turmaFiltro"></select>
-                <label for="statusFiltro">Status:</label>
-                <select id="statusFiltro">
-                    <option value="">Todos</option>
-                    <option value="ativo">Ativo</option>
-                    <option value="inativo">Inativo</option>
-                </select>
+            <section class="filtros" aria-label="Filtros de busca">
+                <h2><i class="bi bi-funnel"></i> Filtros</h2>
+                <div class="form-group">
+                    <label for="turmaFiltro">Turma:</label>
+                    <select id="turmaFiltro" aria-label="Filtrar por turma">
+                        <option value="">Todas as turmas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="statusFiltro">Status:</label>
+                    <select id="statusFiltro" aria-label="Filtrar por status">
+                        <option value="">Todos os status</option>
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                    </select>
+                </div>
             </section>
-            <section class="estatisticas">
-                <h2>Estatísticas</h2>
-                <ul>
-                    <li>Total de alunos: <span id="totalAlunos">0</span></li>
-                    <li>Alunos ativos: <span id="alunosAtivos">0</span></li>
-                    <li>Por turma: <span id="alunosPorTurma">0</span></li>
-                </ul>
+
+            <section class="estatisticas" aria-label="Estatísticas">
+                <h2><i class="bi bi-graph-up"></i> Estatísticas</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Total de alunos</span>
+                        <span id="totalAlunos" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Alunos ativos</span>
+                        <span id="alunosAtivos" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-card full-width">
+                        <span class="stat-label">Distribuição por turma</span>
+                        <span id="alunosPorTurma" class="stat-value small">-</span>
+                    </div>
+                </div>
             </section>
-            <button id="novoAlunoBtn">Novo Aluno</button>
-            <button id="novaMatriculaBtn">Nova Matrícula</button>
+
+            <div class="action-buttons">
+                <button id="novoAlunoBtn" onclick="abrirModal('modalNovoAluno')" class="btn-primary">
+                    <i class="bi bi-person-plus"></i>
+                    Novo Aluno
+                </button>
+                <button id="novaMatriculaBtn" onclick="abrirModal('modalNovaMatricula')" class="btn-secondary">
+                    <i class="bi bi-journal-plus"></i>
+                    Nova Matrícula
+                </button>
+            </div>
         </aside>
-        <section class="listagem-principal" aria-live="polite">
-            <h2>Alunos</h2>
-            <table id="tabelaAlunos">
-                <caption>Lista de alunos</caption>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Data de Nascimento</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Turma</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Alunos serão listados aqui via JS -->
-                </tbody>
-            </table>
+
+        <section class="listagem-principal" aria-label="Lista de alunos">
+            <div class="section-header">
+                <h2><i class="bi bi-people"></i> Alunos Cadastrados</h2>
+                <div class="table-actions">
+                    <button class="btn-icon" onclick="exportarDados()" title="Exportar dados">
+                        <i class="bi bi-download"></i>
+                    </button>
+                    <button class="btn-icon" onclick="atualizarDados()" title="Atualizar lista">
+                        <i class="bi bi-arrow-clockwise"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="tabelaAlunos" aria-label="Lista de alunos">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Data de Nascimento</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Turma</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Conteúdo preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
+
     <!-- Modal Novo Aluno -->
-    <div id="modalNovoAluno" class="modal" aria-hidden="true">
-        <form id="formNovoAluno">
-            <h2>Novo Aluno</h2>
-            <label for="nomeAluno">Nome*</label>
-            <input type="text" id="nomeAluno" name="nome" required minlength="3" maxlength="80">
-            <label for="dataNascimento">Data de Nascimento*</label>
-            <input type="date" id="dataNascimento" name="data_nascimento" required>
-            <label for="emailAluno">Email</label>
-            <input type="email" id="emailAluno" name="email" pattern="^[^@]+@[^@]+\.[^@]+$">
-            <label for="statusAluno">Status*</label>
-            <select id="statusAluno" name="status" required>
-                <option value="ativo">Ativo</option>
-                <option value="inativo">Inativo</option>
-            </select>
-            <label for="turmaAluno">Turma</label>
-            <select id="turmaAluno" name="turma_id">
-                <option value="">Nenhuma</option>
-                <!-- Turmas via JS -->
-            </select>
-            <button type="submit">Salvar</button>
-            <button type="button" id="fecharModalAluno">Cancelar</button>
-        </form>
+    <div id="modalNovoAluno" class="modal" aria-hidden="true" role="dialog" aria-labelledby="tituloNovoAluno">
+        <div class="modal-content">
+            <form id="formNovoAluno" class="form">
+                <h2 id="tituloNovoAluno">
+                    <i class="bi bi-person-plus"></i>
+                    Novo Aluno
+                </h2>
+                
+                <div class="form-group">
+                    <label for="nomeAluno">Nome completo*</label>
+                    <input 
+                        type="text" 
+                        id="nomeAluno" 
+                        name="nome" 
+                        required 
+                        minlength="3" 
+                        maxlength="80"
+                        placeholder="Digite o nome completo"
+                    >
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dataNascimento">Data de Nascimento*</label>
+                        <input 
+                            type="date" 
+                            id="dataNascimento" 
+                            name="data_nascimento" 
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="statusAluno">Status*</label>
+                        <select id="statusAluno" name="status" required>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailAluno">Email</label>
+                    <input 
+                        type="email" 
+                        id="emailAluno" 
+                        name="email" 
+                        placeholder="exemplo@email.com"
+                        pattern="^[^@]+@[^@]+\.[^@]+$"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="turmaAluno">Turma</label>
+                    <select id="turmaAluno" name="turma_id">
+                        <option value="">Selecione uma turma</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="bi bi-check-lg"></i>
+                        Salvar
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="fecharModal('modalNovoAluno')">
+                        <i class="bi bi-x"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
+
     <!-- Modal Nova Matrícula -->
-    <div id="modalNovaMatricula" class="modal" aria-hidden="true">
-        <form id="formNovaMatricula">
-            <h2>Nova Matrícula</h2>
-            <label for="alunoMatricula">Aluno*</label>
-            <select id="alunoMatricula" name="aluno_id" required>
-                <!-- Alunos via JS -->
-            </select>
-            <label for="turmaMatricula">Turma*</label>
-            <select id="turmaMatricula" name="turma_id" required>
-                <!-- Turmas via JS -->
-            </select>
-            <button type="submit">Matricular</button>
-            <button type="button" id="fecharModalMatricula">Cancelar</button>
-        </form>
+    <div id="modalNovaMatricula" class="modal" aria-hidden="true" role="dialog" aria-labelledby="tituloNovaMatricula">
+        <div class="modal-content">
+            <form id="formNovaMatricula" class="form">
+                <h2 id="tituloNovaMatricula">
+                    <i class="bi bi-journal-plus"></i>
+                    Nova Matrícula
+                </h2>
+
+                <div class="form-group">
+                    <label for="alunoMatricula">Aluno*</label>
+                    <select id="alunoMatricula" name="aluno_id" required>
+                        <option value="">Selecione um aluno</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="turmaMatricula">Turma*</label>
+                    <select id="turmaMatricula" name="turma_id" required>
+                        <option value="">Selecione uma turma</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="bi bi-check-lg"></i>
+                        Confirmar Matrícula
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="fecharModal('modalNovaMatricula')">
+                        <i class="bi bi-x"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
+
     <script src="scripts.js"></script>
 </body>
 </html>
